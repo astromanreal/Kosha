@@ -1,45 +1,61 @@
-import type { Metadata } from 'next';
+
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { asanas } from './asanasData';
-import type { AsanaInfo } from './asanasData';
-import { ArrowRight } from 'lucide-react';
+import { asanas, type AsanaInfo } from './asanasData';
+import { ArrowRight, Filter, RotateCcw } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { getIconComponent } from '@/lib/icon-map';
-
-const siteBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.koshaexplorer.com';
-
-export const metadata: Metadata = {
-  title: 'Yoga Asana Library | Poses, Benefits & Instructions | Kosha Explorer',
-  description: 'Explore a comprehensive library of yoga asanas (poses) with detailed instructions, benefits, modifications, and contraindications. Enhance your yoga practice and understanding.',
-  keywords: ['Yoga Asanas', 'Yoga Poses', 'Yoga Library', 'Yoga Instructions', 'Asana Benefits', 'Hatha Yoga', 'Vinyasa Yoga'],
-  openGraph: {
-    title: 'Yoga Asana Library | Poses, Benefits & Instructions | Kosha Explorer',
-    description: 'Discover a vast collection of yoga poses with detailed guides, benefits, and tips for all levels. Enhance your yoga journey.',
-    url: `${siteBaseUrl}/yoga`,
-    type: 'website',
-    images: [
-      {
-        url: `https://picsum.photos/seed/yoga-asana-library-og/1200/630`,
-        width: 1200,
-        height: 630,
-        alt: 'Yoga Asana Library - Kosha Explorer',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Yoga Asana Library | Kosha Explorer',
-    description: 'Explore yoga poses with instructions, benefits, and modifications. Deepen your practice with our comprehensive asana library.',
-    images: [`https://picsum.photos/seed/yoga-asana-library-twitter/1200/630`],
-  },
-};
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 
 const YogaIcon = getIconComponent('Yoga');
 
 export default function YogaLibraryPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('');
+  const [filteredAsanas, setFilteredAsanas] = useState<AsanaInfo[]>(asanas);
+
+  const uniqueCategories = [...new Set(asanas.map(a => a.category))].sort();
+  const uniqueDifficulties = [...new Set(asanas.map(a => a.difficulty))].sort();
+
+  useEffect(() => {
+    let tempAsanas = asanas;
+    if (selectedCategory) {
+      tempAsanas = tempAsanas.filter(a => a.category === selectedCategory);
+    }
+    if (selectedDifficulty) {
+      tempAsanas = tempAsanas.filter(a => a.difficulty === selectedDifficulty);
+    }
+    setFilteredAsanas(tempAsanas);
+  }, [selectedCategory, selectedDifficulty]);
+
+  const resetFilters = () => {
+    setSelectedCategory('');
+    setSelectedDifficulty('');
+  };
+
+  const handleCategoryChange = (value: string) => {
+    if (value === "all-categories") {
+      setSelectedCategory('');
+    } else {
+      setSelectedCategory(value);
+    }
+  };
+
+  const handleDifficultyChange = (value: string) => {
+    if (value === "all-difficulties") {
+      setSelectedDifficulty('');
+    } else {
+      setSelectedDifficulty(value);
+    }
+  };
+
+
   return (
     <div className="space-y-12">
       <section className="text-center">
@@ -50,13 +66,52 @@ export default function YogaLibraryPage() {
         </p>
       </section>
 
+      <Card className="shadow-lg border-border bg-card/50">
+        <CardHeader>
+          <CardTitle className="text-xl text-foreground flex items-center">
+            <Filter className="mr-2 h-5 w-5 text-accent" /> Filter Asanas
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col sm:flex-row gap-4 items-end">
+          <div className="w-full sm:w-auto flex-grow">
+            <Label htmlFor="category-filter" className="text-sm font-medium">Category</Label>
+            <Select value={selectedCategory || "all-categories"} onValueChange={handleCategoryChange}>
+              <SelectTrigger id="category-filter" className="w-full mt-1">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all-categories">All Categories</SelectItem>
+                {uniqueCategories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-full sm:w-auto flex-grow">
+            <Label htmlFor="difficulty-filter" className="text-sm font-medium">Difficulty</Label>
+            <Select value={selectedDifficulty || "all-difficulties"} onValueChange={handleDifficultyChange}>
+              <SelectTrigger id="difficulty-filter" className="w-full mt-1">
+                <SelectValue placeholder="All Difficulties" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all-difficulties">All Difficulties</SelectItem>
+                {uniqueDifficulties.map(diff => <SelectItem key={diff} value={diff}>{diff}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button variant="outline" onClick={resetFilters} className="w-full sm:w-auto">
+            <RotateCcw className="mr-2 h-4 w-4" /> Reset
+          </Button>
+        </CardContent>
+      </Card>
+
       <section>
         <h2 className="text-3xl font-semibold text-center mb-8 text-foreground">Discover Yoga Asanas</h2>
-        {asanas.length === 0 ? (
-          <p className="text-muted-foreground text-center">No asanas available yet. Please check back later for our growing library of yoga poses.</p>
+        {filteredAsanas.length === 0 ? (
+          <p className="text-muted-foreground text-center py-8 text-lg">
+            No asanas match your current filter criteria. Try adjusting your filters or view all asanas.
+          </p>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-            {asanas.map((asana: AsanaInfo) => (
+            {filteredAsanas.map((asana: AsanaInfo) => (
               <Link key={asana.id} href={`/yoga/${asana.slug}`} className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl">
                 <Card className="h-full flex flex-col overflow-hidden shadow-lg transform transition-all duration-300 ease-out group-hover:scale-105 group-hover:shadow-2xl group-hover:-translate-y-1 bg-card hover:bg-muted/50 border border-border group-hover:border-primary/50">
                   <div className="relative w-full h-56">

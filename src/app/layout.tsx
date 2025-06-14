@@ -27,15 +27,15 @@ export const metadata: Metadata = {
     template: '%s | Kosha Explorer',
   },
   description: 'Explore the Pancha Koshas, interactive anatomy, Ayurvedic wellness, yoga practices, and personalized tools for holistic well-being. Your portal to physical, mental, and spiritual intelligence.',
-  keywords: ['Pancha Kosha', 'Ayurveda', 'Holistic Health', 'Yoga', 'Meditation', 'Wellness', 'Anatomy', 'Spiritual Growth'],
+  keywords: ['Pancha Kosha', 'Ayurveda', 'Holistic Health', 'Yoga', 'Meditation', 'Wellness', 'Anatomy', 'Spiritual Growth', 'Mindfulness', 'Self-Discovery', 'Holistic Wellness Platform'],
   openGraph: {
     title: 'Kosha Explorer | Holistic Health, Ayurveda, Yoga & Meditation',
-    description: 'Your portal to physical, mental, and spiritual intelligence. Explore Pancha Koshas, anatomy, Ayurveda, yoga, and more.',
+    description: 'Your portal to physical, mental, and spiritual intelligence. Explore Pancha Koshas, anatomy, Ayurveda, yoga, and personalized tools.',
     url: siteBaseUrl,
     siteName: 'Kosha Explorer',
     images: [
       {
-        url: 'https://picsum.photos/seed/kosha-explorer-og-default/1200/630',
+        url: `https://placehold.co/1200x630.png?text=Kosha+Explorer+Holistic+Wellness`,
         width: 1200,
         height: 630,
         alt: 'Kosha Explorer - Holistic Wellness Platform',
@@ -48,9 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Kosha Explorer | Holistic Health, Ayurveda, Yoga & Meditation',
     description: 'Explore Pancha Koshas, anatomy, Ayurveda, yoga, and personalized tools for holistic well-being.',
-    images: ['https://picsum.photos/seed/kosha-explorer-twitter-default/1200/630'],
-    // site: '@yourtwitterhandle', // Optional: Add your Twitter handle
-    // creator: '@yourtwitterhandle', // Optional: Add creator's Twitter handle
+    images: [`https://placehold.co/1200x630.png?text=Kosha+Explorer+Holistic+Wellness`],
   },
   robots: {
     index: true,
@@ -63,8 +61,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  icons: { // Favicon placeholder, actual file not generated as per guidelines
-    icon: '/favicon.ico', // This path is conventional
+  icons: { 
+    icon: '/favicon.ico', 
   }
 };
 
@@ -73,8 +71,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kosha Explorer",
+    "url": siteBaseUrl,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteBaseUrl}/search?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kosha Explorer",
+    "url": siteBaseUrl,
+    "logo": `https://placehold.co/200x60.png?text=Kosha+Explorer+Logo`
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body 
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
@@ -82,7 +110,7 @@ export default function RootLayout({
           <ThemeProvider
             attribute="class"
             defaultTheme="forest-teal" 
-            enableSystem={false} // Disabled system preference, set forest-teal as default
+            enableSystem={false} 
             disableTransitionOnChange
           >
             <Navbar />

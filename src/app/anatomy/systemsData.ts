@@ -88,6 +88,7 @@ export interface SystemInfo {
   slug?: string;
   details: {
     overview: string; 
+    imageUrl?: string; // Added for specific system image
     imageHint: string;
     sanskritName?: string;
     illustrationCaption?: { 
@@ -157,10 +158,11 @@ export const systems: SystemInfo[] = [
     details: {
       sanskritName: "अस्थि तंत्र (Asthi Tantra)",
       overview: "The skeletal system is the body's internal framework, composed of bones and connective tissues. It provides structure, enables movement, protects vital organs, stores essential minerals, and produces blood cells through the process of hematopoiesis.",
-      imageHint: "human skeleton",
+      imageUrl: "https://i.pinimg.com/736x/1d/e0/76/1de0767971ec8011c96c98b45ae39985.jpg",
+      imageHint: "human skeleton diagram",
       illustrationCaption: {
         title: "Skeletal System Illustration",
-        description: "A conceptual representation of the major bones and joints of the human skeleton."
+        description: "A detailed representation of the major bones and joints of the human skeleton."
       },
       keyComponents: [
         { name: "Bones", description: "Rigid organs made of collagen and calcium phosphate. Humans have 206 bones in adulthood. They provide structure, protect organs, and act as levers for muscles." },
@@ -233,7 +235,8 @@ export const systems: SystemInfo[] = [
     details: {
       sanskritName: "मांसपेशीय तंत्र (Māṁsapeśīya Tantra)",
       overview: "The muscular system consists of specialized tissues that enable the body to move, maintain posture, and produce heat. It works in coordination with the skeletal and nervous systems to facilitate voluntary and involuntary movements.",
-      imageHint: "muscle anatomy",
+      imageUrl: "https://i.pinimg.com/736x/6b/54/09/6b5409cda13d77e4b3345ad3156d06f0.jpg",
+      imageHint: "muscle anatomy diagram",
       illustrationCaption: {
         title: "Muscular System Illustration",
         description: "A diagram showing major muscle groups in the human body including skeletal, smooth, and cardiac muscles."
@@ -310,7 +313,8 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "रक्तसंचार तंत्र (Raktasañchāra Tantra)",
         overview: "The circulatory system is responsible for the transport of blood, oxygen, nutrients, hormones, and waste products throughout the body. It consists of the heart, blood, and a vast network of blood vessels that ensure the body’s tissues receive vital substances for survival and proper function.",
-        imageHint: "human heart circulatory",
+        imageUrl: "https://i.pinimg.com/736x/df/7e/58/df7e58b1956d6b4c5d9552d4ba7dec4e.jpg",
+        imageHint: "human heart circulatory diagram",
         illustrationCaption: {
             title: "Circulatory System Diagram",
             description: "Illustration showing the heart, arteries, veins, and capillaries in systemic and pulmonary circulation."
@@ -389,7 +393,8 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "श्वसन तंत्र (Śvasana Tantra)",
         overview: "The respiratory system is responsible for the intake of oxygen and the expulsion of carbon dioxide through a series of organs and tissues. It plays a crucial role in cellular respiration and maintaining the acid-base balance of the body.",
-        imageHint: "human lungs",
+        imageUrl: "https://i.pinimg.com/736x/19/e8/8b/19e88bf9bc9fafbfe2631101d295dbdd.jpg",
+        imageHint: "human lungs diagram",
         illustrationCaption: {
             title: "Respiratory System Diagram",
             description: "Illustration showing lungs, trachea, bronchi, bronchioles, and alveoli involved in gas exchange."
@@ -466,7 +471,8 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "पाचन तंत्र (Pācana Tantra)",
         overview: "The digestive system is responsible for breaking down food into nutrients, absorbing these nutrients into the bloodstream, and eliminating waste. It includes a complex series of organs working together for ingestion, digestion, absorption, and excretion.",
-        imageHint: "digestive organs",
+        imageUrl: "https://i.pinimg.com/736x/65/e3/b0/65e3b0d0eb27f801d4ce95c2de7ffc53.jpg",
+        imageHint: "digestive organs diagram",
         illustrationCaption: {
             title: "Digestive System Diagram",
             description: "Anatomical illustration of the digestive tract including the stomach, intestines, liver, pancreas, and accessory organs."
@@ -490,8 +496,6 @@ export const systems: SystemInfo[] = [
             { name: "Elimination", description: "Removal of indigestible substances and waste products as feces." }
         ],
         digestionPhases: [
-          // The JSON provided `digestionPhases` as an array of objects with "phase" and "description".
-          // Mapping to ComponentDetail:
             { name: "Cephalic Phase", description: "Triggered by the sight, smell, or thought of food; prepares digestive organs for activity." },
             { name: "Gastric Phase", description: "Begins when food reaches the stomach; stimulates acid and enzyme secretion." },
             { name: "Intestinal Phase", description: "Controls the rate of chyme entry into the small intestine and regulates digestive activity." }
@@ -552,31 +556,23 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "तंत्रिका तंत्र (Tantrikā Tantra)",
         overview: "The nervous system is the body's complex communication network. It coordinates actions, processes sensory information, enables cognition, and controls bodily functions through electrical and chemical signals.",
-        imageHint: "human brain nerves",
+        imageUrl: "https://i.pinimg.com/736x/4c/13/bd/4c13bd22046e5e6248baad123d1d92f8.jpg",
+        imageHint: "human brain nerves diagram",
         illustrationCaption: {
             title: "Nervous System Diagram",
             description: "Diagram showing the brain, spinal cord, and peripheral nerves branching throughout the body."
         },
-        keyComponents: [ // From new data, mapping subparts into description or subtypes if ComponentDetail supports it.
+        keyComponents: [ 
             { 
                 name: "Brain", 
                 description: "The control center. Subparts: Cerebrum, Cerebellum, Brainstem, Hypothalamus, Thalamus.",
-                // Or more structured:
-                // description: "The control center of the body that processes sensory input, regulates functions, and enables consciousness and cognition.",
-                // subtypes: [ 
-                //     { name: "Cerebrum", description: "Largest part, responsible for higher functions like thought, language, and voluntary movement." },
-                //     { name: "Cerebellum", description: "Coordinates voluntary movements, posture, balance, and speech." },
-                //     { name: "Brainstem", description: "Connects cerebrum and cerebellum to spinal cord; controls vital functions like breathing and heartbeat." },
-                //     { name: "Hypothalamus", description: "Regulates body temperature, hunger, thirst, sleep, and emotional activity." },
-                //     { name: "Thalamus", description: "Relays sensory and motor signals to the cerebral cortex and regulates consciousness, sleep, and alertness." }
-                // ]
             },
             { name: "Spinal Cord", description: "A long, thin tubular structure that extends from the brainstem, facilitating signal transmission between brain and body." },
             { name: "Nerves", description: "Bundles of axons that carry electrical signals to and from the central nervous system." },
             { name: "Neurons", description: "Specialized cells that transmit nerve impulses. Consist of dendrites, axons, and synapses." },
             { name: "Glial Cells", description: "Support cells that nourish, protect, and maintain neurons." }
         ],
-        divisions: [ // From new data
+        divisions: [ 
             { name: "Central Nervous System (CNS)", description: "Comprises the brain and spinal cord. Processes and integrates information and directs responses." },
             { name: "Peripheral Nervous System (PNS)", description: "Consists of sensory and motor neurons that connect the CNS to the limbs and organs." },
             { name: "Somatic Nervous System", description: "Controls voluntary muscle movements and relays sensory information." },
@@ -584,26 +580,26 @@ export const systems: SystemInfo[] = [
             { name: "Sympathetic Nervous System", description: "Prepares the body for stress-related activities (fight or flight)." },
             { name: "Parasympathetic Nervous System", description: "Calms the body down and conserves energy (rest and digest)." }
         ],
-        primaryFunctions: [ // From new data
+        primaryFunctions: [ 
             { name: "Sensory Input", description: "Detects changes in the internal and external environment using receptors." },
             { name: "Integration", description: "Processes sensory input and determines the appropriate response." },
             { name: "Motor Output", description: "Activates effectors (muscles/glands) to respond to stimuli." },
             { name: "Cognition and Emotion", description: "Enables thought, memory, learning, emotions, and decision-making." },
             { name: "Homeostasis", description: "Maintains internal balance through regulation of body processes." }
         ],
-        keyProcesses: [ // From new data
+        keyProcesses: [ 
             { name: "Synaptic Transmission", description: "The transfer of electrical or chemical signals between neurons at synapses." },
             { name: "Neuroplasticity", description: "The brain's ability to reorganize and form new connections in response to learning or injury." },
             { name: "Reflex Arc", description: "Automatic responses mediated by the spinal cord without brain involvement." }
         ],
-        neurotransmitters: [  // From new data, mapping function to description for ComponentDetail
+        neurotransmitters: [  
             { name: "Dopamine", description: "Controls movement, emotion, and the reward system." },
             { name: "Serotonin", description: "Regulates mood, appetite, and sleep." },
             { name: "Acetylcholine", description: "Enables muscle action, learning, and memory." },
             { name: "Norepinephrine", description: "Influences alertness, arousal, and the stress response." },
             { name: "GABA (Gamma-Aminobutyric Acid)", description: "Acts as the primary inhibitory neurotransmitter in the brain, reducing neuronal excitability." }
         ],
-        healthAndWellness: { // From new data
+        healthAndWellness: { 
             tips: [
                 "Engage in regular mental stimulation and learning.",
                 "Maintain a balanced diet rich in omega-3 fatty acids.",
@@ -618,25 +614,25 @@ export const systems: SystemInfo[] = [
                 "Monitor for signs of neurological conditions like memory loss or tremors."
             ]
         },
-        commonDisorders: [ // From new data
+        commonDisorders: [ 
             { name: "Alzheimer’s Disease", description: "A degenerative brain disorder causing memory loss and cognitive decline." },
             { name: "Parkinson’s Disease", description: "A neurological condition affecting movement and coordination due to dopamine deficiency." },
             { name: "Multiple Sclerosis (MS)", description: "An autoimmune disease that damages the myelin sheath around nerves." },
             { name: "Epilepsy", description: "A disorder characterized by recurrent seizures due to abnormal electrical activity in the brain." },
             { name: "Neuropathy", description: "Nerve damage causing pain, numbness, and weakness, often in the hands and feet." }
         ],
-        interestingFacts: [ // From new data
+        interestingFacts: [ 
             "The human brain contains around 86 billion neurons.",
             "Nerve impulses can travel at speeds up to 120 m/s (268 mph).",
             "The brain uses about 20% of the body’s total energy.",
             "The spinal cord is about 45 cm (18 inches) long in adults."
         ],
-        relatedSystems: [ // From new data
+        relatedSystems: [ 
             "Endocrine System (closely interacts via hypothalamus and hormone regulation)",
             "Muscular System (receives motor commands)",
             "Sensory Organs (linked for input)"
         ],
-         externalResources: [ // From new data
+         externalResources: [ 
             { title: "National Institute of Neurological Disorders and Stroke", url: "https://www.ninds.nih.gov/" },
             { title: "Harvard Brain Science Initiative", url: "https://brain.harvard.edu/" }, 
             { title: "Khan Academy – Nervous System", url: "https://www.khanacademy.org/science/biology/human-biology/neuron-nervous-system" }
@@ -651,12 +647,13 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "अंतःस्रावी तंत्र (Antaḥsrāvī Tantra)",
         overview: "The endocrine system is a network of glands that produce and secrete hormones to regulate various bodily functions such as metabolism, growth, mood, reproduction, and homeostasis.",
-        imageHint: "endocrine glands",
+        imageUrl: "https://i.pinimg.com/736x/36/34/09/36340904be16ba791c022e75d769524d.jpg",
+        imageHint: "endocrine glands diagram",
         illustrationCaption: {
             title: "Endocrine System Diagram",
             description: "Major endocrine glands including pituitary, thyroid, adrenal, pancreas, ovaries, and testes."
         },
-        primaryFunctions: [ // From new data
+        primaryFunctions: [ 
             { name: "Hormone Production", description: "Secretes hormones that regulate bodily functions." },
             { name: "Metabolism Regulation", description: "Controls the body's energy usage and storage." },
             { name: "Growth and Development", description: "Regulates cellular growth and physical development." },
@@ -664,7 +661,7 @@ export const systems: SystemInfo[] = [
             { name: "Reproduction", description: "Regulates sexual development, reproductive cycles, and pregnancy." },
             { name: "Mood and Stress Response", description: "Influences emotional well-being and response to stress." }
         ],
-        majorGlands: [ // From new data, fits GlandDetail structure
+        majorGlands: [ 
             { name: "Hypothalamus", location: "Brain", hormones: ["Releasing Hormones (TRH, CRH, GnRH)", "Inhibiting Hormones"], function: "Links the nervous and endocrine systems. Regulates the pituitary gland and maintains homeostasis." },
             { name: "Pituitary Gland", location: "Base of the brain", hormones: ["GH", "ACTH", "TSH", "LH", "FSH", "Prolactin", "ADH", "Oxytocin"], function: "The master gland. Controls other endocrine glands and influences growth, metabolism, and reproduction." },
             { name: "Pineal Gland", location: "Brain", hormones: ["Melatonin"], function: "Regulates sleep-wake cycles (circadian rhythm)." },
@@ -676,7 +673,7 @@ export const systems: SystemInfo[] = [
             { name: "Testes", location: "Male scrotum", hormones: ["Testosterone"], function: "Regulates sperm production and male secondary sexual characteristics." },
             { name: "Thymus", location: "Upper chest behind the sternum", hormones: ["Thymosin"], function: "Supports immune function by aiding T-cell maturation in early life." }
         ],
-        keyHormones: [ // From new data, fits HormoneDetail structure
+        keyHormones: [ 
             { name: "Insulin", function: "Lowers blood glucose by promoting cellular uptake.", producedBy: "Pancreas" },
             { name: "Cortisol", function: "Regulates metabolism and stress response.", producedBy: "Adrenal Cortex" },
             { name: "Thyroxine (T4)", function: "Increases metabolic rate.", producedBy: "Thyroid" },
@@ -685,11 +682,11 @@ export const systems: SystemInfo[] = [
             { name: "Testosterone", function: "Stimulates sperm production and male traits.", producedBy: "Testes" },
             { name: "Adrenaline", function: "Prepares the body for 'fight or flight' in stress situations.", producedBy: "Adrenal Medulla" }
         ],
-        healthAndWellness: { // From new data
+        healthAndWellness: { 
             tips: ["Consume a balanced diet rich in iodine, zinc, and essential fatty acids.", "Get regular physical activity to balance hormone production.", "Manage stress through mindfulness, yoga, or breathing techniques.", "Get adequate sleep to maintain hormonal balance.", "Limit processed sugar and caffeine, which may disrupt hormone cycles."],
             preventiveCare: ["Regular blood tests for thyroid, glucose,and hormone levels.", "Screenings for diabetes, PCOS, and thyroid disorders.", "Avoid exposure to endocrine-disrupting chemicals (EDCs) in plastics, pesticides, etc."]
         },
-        commonDisorders: [ // From new data
+        commonDisorders: [ 
             { name: "Diabetes Mellitus", description: "A metabolic disorder characterized by high blood sugar due to insufficient insulin (Type 1) or resistance to insulin (Type 2)." },
             { name: "Hypothyroidism", description: "Underactive thyroid resulting in fatigue, weight gain, and cold sensitivity." },
             { name: "Hyperthyroidism", description: "Overactive thyroid causing weight loss, heat intolerance, and anxiety." },
@@ -697,18 +694,18 @@ export const systems: SystemInfo[] = [
             { name: "Polycystic Ovary Syndrome (PCOS)", description: "A hormonal imbalance in women affecting menstruation, fertility, and metabolism." },
             { name: "Addison’s Disease", description: "Insufficient adrenal hormones causing fatigue, weight loss, and low blood pressure." }
         ],
-        interestingFacts: [ // From new data
+        interestingFacts: [ 
             "Hormones act as chemical messengers and can affect cells far from their site of release.",
             "The pituitary gland is about the size of a pea but controls most endocrine functions.",
             "Melatonin levels rise in darkness to promote sleep.",
             "Insulin was the first hormone to be artificially synthesized."
         ],
-        relatedSystems: [ // From new data
+        relatedSystems: [ 
             "Nervous System (interacts via hypothalamus and pituitary control)",
             "Digestive System (influences metabolism)",
             "Reproductive System (regulation of sex hormones)"
         ],
-        externalResources: [ // From new data
+        externalResources: [ 
             { title: "Endocrine Society", url: "https://www.endocrine.org/" },
             { title: "Hormone Health Network", url: "https://www.hormone.org/" },
             { title: "Khan Academy – Endocrine System", url: "https://www.khanacademy.org/science/biology/human-biology/endocrine-system" }
@@ -723,19 +720,20 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "मूत्रोत्सर्ग तंत्र (Mūtrotsarga Tantra)",
         overview: "The urinary system is responsible for filtering blood to remove waste products and excess substances, maintaining fluid and electrolyte balance, and excreting urine from the body.",
-        imageHint: "kidney anatomy",
+        imageUrl: "https://i.pinimg.com/736x/13/4a/fd/134afdb32c7888349867cda51ae78b24.jpg",
+        imageHint: "kidney anatomy diagram",
         illustrationCaption: {
             title: "Urinary System Diagram",
             description: "Organs of the urinary system: kidneys, ureters, bladder, and urethra."
         },
-        keyOrgans: [ // Mapped from keyOrgansAndComponents to fit existing structure
+        keyOrgans: [ 
             { name: "Kidneys", description: "Filters blood, produces urine, and regulates electrolyte balance.", location: "Retroperitoneal space of the abdomen" },
             { name: "Ureters", description: "Transport urine from the kidneys to the bladder via peristalsis.", location: "Connect kidneys to bladder" },
             { name: "Urinary Bladder", description: "Stores urine until it is voluntarily expelled.", location: "Pelvic cavity" },
             { name: "Urethra", description: "Conducts urine from the bladder to the exterior during urination.", location: "Exits the bladder to outside the body" },
             { name: "Nephrons", description: "Microscopic structures that perform filtration, reabsorption, and secretion.", location: "Functional units within kidneys" }
         ],
-        primaryFunctions: [ // From new data
+        primaryFunctions: [ 
             { name: "Waste Elimination", description: "Removes nitrogenous waste products like urea, uric acid, and creatinine from the blood." },
             { name: "Fluid Balance", description: "Maintains homeostasis of water and electrolytes in the body." },
             { name: "Blood Filtration", description: "Filters around 50 gallons of blood daily to produce about 1.5 liters of urine." },
@@ -743,13 +741,13 @@ export const systems: SystemInfo[] = [
             { name: "pH Balance", description: "Maintains acid-base balance by excreting hydrogen ions and reabsorbing bicarbonate." },
             { name: "Hormone Production", description: "Produces hormones like erythropoietin (stimulates red blood cell production) and calcitriol (active vitamin D)." }
         ],
-        urineFormationStages: [ // From new data, needs mapping to ComponentDetail[]
+        urineFormationStages: [ 
             { name: "Filtration", description: "Initial filtering of blood in the kidney's glomerulus." },
             { name: "Reabsorption", description: "Essential substances are reabsorbed back into the blood in the proximal and distal tubules." },
             { name: "Secretion", description: "Waste products are actively secreted into kidney tubules." },
             { name: "Excretion", description: "Final elimination of urine from the body through ureters to bladder and urethra." }
         ],
-         healthAndWellness: { // From new data
+         healthAndWellness: { 
             tips: [
                 "Drink plenty of water (6–8 glasses a day) to help flush out toxins.",
                 "Limit salt, caffeine, and sugar intake to reduce kidney strain.",
@@ -764,7 +762,7 @@ export const systems: SystemInfo[] = [
                 "Diabetic screening to prevent diabetic nephropathy."
             ]
         },
-        commonDisorders: [ // From new data
+        commonDisorders: [ 
             { name: "Urinary Tract Infection (UTI)", description: "Infection of any part of the urinary system, most commonly the bladder or urethra." },
             { name: "Kidney Stones (Nephrolithiasis)", description: "Hard deposits of minerals and salts that form in the kidneys and may cause severe pain." },
             { name: "Chronic Kidney Disease (CKD)", description: "Progressive loss of kidney function over time; may lead to kidney failure." },
@@ -773,18 +771,18 @@ export const systems: SystemInfo[] = [
             { name: "Glomerulonephritis", description: "Inflammation of the glomeruli in the kidneys, often autoimmune or post-infection." },
             { name: "Polycystic Kidney Disease (PKD)", description: "Genetic disorder leading to fluid-filled cysts in the kidneys and reduced function." }
         ],
-        interestingFacts: [ // From new data
+        interestingFacts: [ 
             "Each kidney contains about 1 million nephrons.",
             "The kidneys filter approximately 180 liters of blood each day.",
             "Urine is typically composed of 95% water and 5% waste products.",
             "The bladder can hold up to 500 mL of urine comfortably."
         ],
-        relatedSystems: [ // From new data
+        relatedSystems: [ 
             "Circulatory System (blood supply to kidneys)",
             "Endocrine System (hormone regulation via ADH and aldosterone)",
             "Nervous System (bladder control and urination signals)"
         ],
-        externalResources: [ // From new data
+        externalResources: [ 
             { title: "National Kidney Foundation", url: "https://www.kidney.org/" },
             { title: "Mayo Clinic – Urinary System", url: "https://www.mayoclinic.org/diseases-conditions/kidney-disease" },
             { title: "Khan Academy – Urinary System", url: "https://www.khanacademy.org/science/biology/human-biology/excretory-system" }
@@ -799,12 +797,13 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "प्रजनन तंत्र (Prajanana Tantra)",
         overview: "The reproductive system is responsible for the production of offspring, ensuring the continuation of the species. It includes both male and female organs, each with specialized functions for reproduction.",
-        imageHint: "reproductive organs",
+        imageUrl: "https://i.pinimg.com/736x/dc/ae/f8/dcaef8c62a82755f12b0befa95879302.jpg",
+        imageHint: "reproductive organs diagram",
         illustrationCaption: {
             title: "Reproductive System Diagrams",
             description: "Separate diagrams for male and female reproductive organs."
         },
-        keyComponents: [ // Mapped from keyOrgansAndComponents in new data
+        keyComponents: [ 
             {
                 name: "Male Reproductive System",
                 description: "Consists of organs responsible for producing and delivering sperm.",
@@ -828,24 +827,24 @@ export const systems: SystemInfo[] = [
                 ]
             }
         ],
-        primaryFunctions: [ // From new data
+        primaryFunctions: [ 
             { name: "Production of Gametes", description: "The male and female reproductive systems produce gametes (sperm and eggs), which are essential for fertilization and reproduction." },
             { name: "Fertilization", description: "The fusion of sperm from the male and egg from the female to form a zygote, beginning the process of pregnancy." },
             { name: "Gestation (in females)", description: "Development of the fertilized egg (zygote) into a fetus within the uterus until birth." },
             { name: "Hormonal Regulation", description: "Both male and female reproductive systems are regulated by hormones such as estrogen, progesterone, testosterone, and others." },
             { name: "Sexual Reproduction", description: "Involves the physical act of intercourse leading to fertilization, followed by pregnancy and birth in females." }
         ],
-        keyProcesses: [ // Mapped from sexualReproductionProcess in new data
+        keyProcesses: [ 
             { name: "Fertilization", description: "The sperm from the male fertilizes the egg from the female, forming a zygote." },
             { name: "Implantation", description: "The fertilized egg (zygote) attaches to the uterine wall for development." },
             { name: "Pregnancy", description: "The development of the zygote into an embryo and fetus, culminating in birth." },
             { name: "Birth", description: "The process by which the fetus is delivered through the vaginal canal or by cesarean section." }
         ],
-        healthAndWellness: { // From new data
+        healthAndWellness: { 
             tips: ["Maintain a healthy diet and exercise regimen to support hormone regulation.","Avoid smoking, excessive alcohol, and illicit drugs as they can affect fertility.","Practice safe sex to prevent sexually transmitted infections (STIs).","Get regular check-ups and screenings, such as pap smears and prostate exams, for early detection of issues.","Stay hydrated and manage stress to support overall reproductive health."],
             preventiveCare: ["Routine gynecological exams for women, including mammograms and pelvic exams.","Annual prostate exams and testosterone checks for men over 50.","Fertility testing and counseling if planning pregnancy or struggling with infertility."]
         },
-        commonDisorders: [ // From new data
+        commonDisorders: [ 
             { name: "Infertility", description: "The inability to conceive after one year of trying, affecting both men and women." },
             { name: "Polycystic Ovary Syndrome (PCOS)", description: "A hormonal disorder in women that can cause irregular periods, excess hair growth, and infertility." },
             { name: "Endometriosis", description: "A painful condition where tissue similar to the uterine lining grows outside the uterus, affecting fertility." },
@@ -854,18 +853,18 @@ export const systems: SystemInfo[] = [
             { name: "STIs (Sexually Transmitted Infections)", description: "Infections passed through sexual contact, such as chlamydia, gonorrhea, HIV, and syphilis." },
             { name: "Menopause", description: "The natural cessation of menstruation in women, marking the end of reproductive years." }
         ],
-        interestingFacts: [ // From new data
+        interestingFacts: [ 
             "The average time for sperm to reach the egg after ejaculation is about 1-2 hours.",
             "Women are born with all the eggs they will ever have, approximately 1-2 million eggs.",
             "Men produce about 1,500 sperm per second.",
             "The uterus can stretch up to 500 times its normal size during pregnancy."
         ],
-        relatedSystems: [ // From new data
+        relatedSystems: [ 
             "Endocrine System (hormones like estrogen and testosterone regulate reproductive processes)",
             "Nervous System (controls sexual arousal and responses)",
             "Circulatory System (supports blood flow during pregnancy and sexual arousal)"
         ],
-        externalResources: [ // From new data
+        externalResources: [ 
             { title: "American Pregnancy Association", url: "https://americanpregnancy.org/" },
             { title: "Mayo Clinic – Reproductive Health", url: "https://www.mayoclinic.org/healthy-lifestyle" },
             { title: "Planned Parenthood", url: "https://www.plannedparenthood.org/" }
@@ -881,7 +880,8 @@ export const systems: SystemInfo[] = [
     details: {
       sanskritName: "लसीका/प्रतिरक्षा प्रणाली (Lasīkā/Pratirakṣā Praṇālī)",
       overview: "The lymphatic system is a part of the immune system that helps the body defend against infection and maintain fluid balance. It consists of a network of lymphatic vessels, lymph nodes, and lymphoid organs. The immune system includes various cells and mechanisms that identify and destroy pathogens, cancer cells, and other foreign bodies.",
-      imageHint: "lymph nodes immune",
+      imageUrl: "https://i.pinimg.com/736x/5b/86/8d/5b868d810d754d16dda9f62d4dfac5b8.jpg",
+      imageHint: "lymph nodes immune diagram",
       illustrationCaption: {
         title: "Lymphatic and Immune System Components",
         description: "Diagram showing lymph nodes, lymphatic vessels, spleen, thymus, tonsils, and bone marrow."
@@ -999,7 +999,8 @@ export const systems: SystemInfo[] = [
     details: {
         sanskritName: "त्वचा प्रणाली (Tvachā Praṇālī)",
         overview: "The integumentary system consists of the skin, hair, nails, and associated glands. It acts as a protective barrier, regulates body temperature, and provides sensory information.",
-        imageHint: "skin layers",
+        imageUrl: "https://i.pinimg.com/736x/42/cf/39/42cf3981bdf2d419998bd5fe1695ef48.jpg",
+        imageHint: "skin layers diagram",
         illustrationCaption: {
             title: "Integumentary System Layers",
             description: "Cross-section of the skin showing epidermis, dermis, hypodermis, hair follicles, sweat glands, and sebaceous glands."
@@ -1063,3 +1064,6 @@ systems.forEach(system => {
 export const getSystemBySlug = (slug: string) => {
   return systems.find(s => s.slug === slug);
 }
+
+
+    

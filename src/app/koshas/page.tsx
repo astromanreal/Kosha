@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Utensils, Wind, BrainCircuit, BookOpenText, Sparkles, Layers, Star, Goal, CheckCircle, ExternalLink, BookMarked } from "lucide-react";
@@ -15,28 +16,39 @@ import {
 const siteBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.koshaexplorer.com';
 
 export const metadata: Metadata = {
-  title: 'The Pancha Koshas: Understanding the Five Sheaths of Existence',
-  description: 'Explore the Pancha Koshas (Annamaya, Pranamaya, Manomaya, Vijnanamaya, Anandamaya) - the five layers of being in yogic philosophy. Learn about their characteristics and practices for holistic well-being.',
-  keywords: ['Pancha Koshas', 'Five Sheaths', 'Yogic Philosophy', 'Annamaya Kosha', 'Pranamaya Kosha', 'Manomaya Kosha', 'Vijnanamaya Kosha', 'Anandamaya Kosha', 'Holistic Well-being', 'Spiritual Growth'],
+  title: 'The Pancha Koshas: Guide to the Five Sheaths of Existence | Kosha Explorer',
+  description: 'Explore the Pancha Koshas (Annamaya, Pranamaya, Manomaya, Vijnanamaya, Anandamaya) - the five layers of being in yogic philosophy. Learn their characteristics, functions, and practices for holistic well-being and spiritual growth on Kosha Explorer.',
+  keywords: ['Pancha Koshas Explained', 'Five Sheaths of Yoga Philosophy', 'Yogic Layers of Being', 'Annamaya Kosha (Physical Body)', 'Pranamaya Kosha (Energy Body)', 'Manomaya Kosha (Mental Body)', 'Vijnanamaya Kosha (Wisdom Body)', 'Anandamaya Kosha (Bliss Body)', 'Holistic Well-being Model', 'Spiritual Growth Path Vedanta', 'Self-Realization Layers'],
   openGraph: {
-    title: 'The Pancha Koshas: Five Sheaths of Existence | Kosha Explorer',
-    description: 'Understand the five layers of being (Annamaya, Pranamaya, Manomaya, Vijnanamaya, Anandamaya) in yogic philosophy for holistic health and spiritual growth.',
+    title: 'Understanding the Pancha Koshas: The Five Layers of Being | Kosha Explorer',
+    description: 'A comprehensive guide to the Annamaya, Pranamaya, Manomaya, Vijnanamaya, and Anandamaya Koshas. Discover practices for holistic health and spiritual self-discovery.',
     url: `${siteBaseUrl}/koshas`,
     type: 'article',
     images: [
       {
-        url: `https://picsum.photos/seed/pancha-koshas-og/1200/630`,
+        url: `https://placehold.co/1200x630.png?text=The+Five+Koshas+Explained`,
         width: 1200,
         height: 630,
-        alt: 'The Five Koshas - Layers of Being',
+        alt: 'Visual representation of the Five Koshas - Layers of Being',
       },
     ],
+    article: {
+      publishedTime: "2024-01-01T00:00:00.000Z",
+      modifiedTime: new Date().toISOString(),
+      authors: [`${siteBaseUrl}/about`],
+      section: "Yoga Philosophy",
+      tags: ['Pancha Koshas', 'Yoga', 'Vedanta', 'Spirituality', 'Holistic Health'],
+    },
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Pancha Koshas: Understanding the Five Sheaths | Kosha Explorer',
-    description: 'Explore the Annamaya, Pranamaya, Manomaya, Vijnanamaya, and Anandamaya Koshas. Learn practices for holistic well-being.',
-    images: [`https://picsum.photos/seed/pancha-koshas-twitter/1200/630`],
+    title: 'Pancha Koshas: Your Guide to the Five Sheaths of Existence | Kosha Explorer',
+    description: 'Explore the Annamaya, Pranamaya, Manomaya, Vijnanamaya, and Anandamaya Koshas. Learn practices for holistic well-being and spiritual insight on Kosha Explorer.',
+    images: [`https://placehold.co/1200x630.png?text=The+Five+Koshas+Explained`],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -179,101 +191,160 @@ const keyInsightsData = [
 
 
 export default function KoshasPage() {
+  const pageUrl = `${siteBaseUrl}/koshas`;
+  const pageTitle = (metadata.title as { default: string }).default || metadata.title as string;
+  const pageDescription = metadata.description as string;
+  const imageUrl = (metadata.openGraph?.images as any)?.[0]?.url;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": pageUrl
+    },
+    "headline": pageTitle,
+    "description": pageDescription,
+    "image": imageUrl,
+    "author": {
+      "@type": "Organization",
+      "name": "Kosha Explorer"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kosha Explorer",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `https://placehold.co/200x60.png?text=Kosha+Explorer+Logo`
+      }
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": new Date().toISOString().split('T')[0],
+    "articleSection": "Yoga Philosophy",
+    "keywords": (metadata.keywords as string[]).join(", ")
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteBaseUrl
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Pancha Koshas",
+      "item": pageUrl
+    }]
+  };
+
   return (
-    <div className="space-y-16">
-      <section className="text-center">
-        <Layers className="h-20 w-20 text-primary mx-auto mb-6" />
-        <h1 className="text-5xl font-bold text-primary mb-6">The Pancha Koshas: Five Sheaths of Existence in Yogic Philosophy</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Yogic philosophy describes human existence through five layers or sheaths, known as the Pancha Koshas. These layers range from the gross physical body to the most subtle spiritual essence, providing a profound map for holistic well-being, self-understanding, and spiritual growth.
-        </p>
-      </section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="space-y-16">
+        <section className="text-center">
+          <Layers className="h-20 w-20 text-primary mx-auto mb-6" />
+          <h1 className="text-5xl font-bold text-primary mb-6">The Pancha Koshas: Five Sheaths of Existence in Yogic Philosophy</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Yogic philosophy describes human existence through five layers or sheaths, known as the Pancha Koshas. These layers range from the gross physical body to the most subtle spiritual essence, providing a profound map for holistic well-being, self-understanding, and spiritual growth.
+          </p>
+        </section>
 
-      <section>
-        <Card className="shadow-2xl border-primary/30 bg-card/90">
-          <CardHeader className="items-center pb-6 text-center">
-            <div className="flex items-center justify-center space-x-3 mb-3">
-              <Star className="h-12 w-12 text-accent" />
-              <CardTitle className="text-4xl text-primary">Overview of the Five Koshas</CardTitle>
-            </div>
-            <CardDescription className="text-lg text-muted-foreground max-w-2xl mx-auto">A concise summary of the five sheaths (Annamaya, Pranamaya, Manomaya, Vijnanamaya, Anandamaya) and their fundamental characteristics within the yogic framework.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto rounded-xl border-2 border-border shadow-inner">
-              <Table className="min-w-full divide-y divide-border">
-                <TableHeader className="bg-muted/60">
-                  <TableRow>
-                    <TableHead className="py-4 pl-6 pr-3 text-left text-sm font-semibold text-foreground w-[220px]">Kosha Name</TableHead>
-                    <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Literal Meaning</TableHead>
-                    <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Aspect of Being</TableHead>
-                    <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Primary Composition</TableHead>
-                    <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground sm:pr-6">Dominant Element(s)</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="divide-y divide-border bg-background">
-                  {koshaOverviewData.map((item) => (
-                    <TableRow key={item.id} className="hover:bg-muted/40 transition-colors duration-200">
-                      <TableCell className="whitespace-nowrap py-5 pl-6 pr-3 text-sm font-medium text-foreground">{item.kosha}</TableCell>
-                      <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.meaning}</TableCell>
-                      <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.aspect}</TableCell>
-                      <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.composition}</TableCell>
-                      <TableCell className="whitespace-nowrap px-3 py-5 text-sm text-muted-foreground sm:pr-6">{item.element}</TableCell>
+        <section>
+          <Card className="shadow-2xl border-primary/30 bg-card/90">
+            <CardHeader className="items-center pb-6 text-center">
+              <div className="flex items-center justify-center space-x-3 mb-3">
+                <Star className="h-12 w-12 text-accent" />
+                <CardTitle className="text-4xl text-primary">Overview of the Five Koshas</CardTitle>
+              </div>
+              <CardDescription className="text-lg text-muted-foreground max-w-2xl mx-auto">A concise summary of the five sheaths (Annamaya, Pranamaya, Manomaya, Vijnanamaya, Anandamaya) and their fundamental characteristics within the yogic framework.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto rounded-xl border-2 border-border shadow-inner">
+                <Table className="min-w-full divide-y divide-border">
+                  <TableHeader className="bg-muted/60">
+                    <TableRow>
+                      <TableHead className="py-4 pl-6 pr-3 text-left text-sm font-semibold text-foreground w-[220px]">Kosha Name</TableHead>
+                      <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Literal Meaning</TableHead>
+                      <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Aspect of Being</TableHead>
+                      <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground">Primary Composition</TableHead>
+                      <TableHead className="px-3 py-4 text-left text-sm font-semibold text-foreground sm:pr-6">Dominant Element(s)</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+                  </TableHeader>
+                  <TableBody className="divide-y divide-border bg-background">
+                    {koshaOverviewData.map((item) => (
+                      <TableRow key={item.id} className="hover:bg-muted/40 transition-colors duration-200">
+                        <TableCell className="whitespace-nowrap py-5 pl-6 pr-3 text-sm font-medium text-foreground">{item.kosha}</TableCell>
+                        <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.meaning}</TableCell>
+                        <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.aspect}</TableCell>
+                        <TableCell className="px-3 py-5 text-sm text-muted-foreground">{item.composition}</TableCell>
+                        <TableCell className="whitespace-nowrap px-3 py-5 text-sm text-muted-foreground sm:pr-6">{item.element}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
-      <section>
-        <div className="text-center mb-12">
-          <Layers className="h-16 w-16 text-accent mx-auto mb-4" />
-          <h2 className="text-4xl font-semibold text-foreground">Detailed Explanation of Each Kosha</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-3">Dive deeper into the individual characteristics, functions, and practices associated with each of the five sheaths for comprehensive self-understanding.</p>
-        </div>
-        <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-12">
-          {koshasData.map((kosha) => (
-            <KoshaInfoCard key={kosha.name} kosha={kosha} />
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <Card className="shadow-xl bg-card/80 border-primary/20">
-          <CardHeader className="text-center">
-            <Goal className="h-16 w-16 text-primary mx-auto mb-4" />
-            <CardTitle className="text-3xl text-primary">The Goal: Realizing the Ātman (True Self)</CardTitle>
-          </CardHeader>
-          <CardContent className="text-center max-w-2xl mx-auto">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              The Pancha Koshas are often likened to layers veiling the innermost Self (Ātman). True self-realization, the ultimate aim of yogic and Vedantic paths, occurs when the seeker transcends all five koshas. This transcendence leads to the profound realization of one's true identity as Brahman—pure, undifferentiated consciousness, existing beyond the limitations of body, energy, mind, intellect, and ego.
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      <section>
-         <div className="text-center mb-10">
-            <BookMarked className="h-16 w-16 text-accent mx-auto mb-4" />
-            <h2 className="text-4xl font-semibold text-foreground">Key Insights on the Pancha Kosha Model</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-3">Understanding the Koshas offers valuable perspectives for a balanced, conscious life and spiritual evolution.</p>
-        </div>
-        <div className="grid md:grid-cols-2 gap-8">
-            {keyInsightsData.map((insight) => (
-            <Card key={insight.title} className="shadow-lg hover:shadow-xl transition-shadow bg-card/50">
-                <CardHeader className="flex flex-row items-center space-x-4 pb-3">
-                <insight.icon className="h-10 w-10 text-primary flex-shrink-0" />
-                <CardTitle className="text-2xl text-primary">{insight.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                <p className="text-muted-foreground leading-relaxed">{insight.description}</p>
-                </CardContent>
-            </Card>
+        <section>
+          <div className="text-center mb-12">
+            <Layers className="h-16 w-16 text-accent mx-auto mb-4" />
+            <h2 className="text-4xl font-semibold text-foreground">Detailed Explanation of Each Kosha</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-3">Dive deeper into the individual characteristics, functions, and practices associated with each of the five sheaths for comprehensive self-understanding.</p>
+          </div>
+          <div className="grid md:grid-cols-1 lg:grid-cols-1 gap-12">
+            {koshasData.map((kosha) => (
+              <KoshaInfoCard key={kosha.name} kosha={kosha} />
             ))}
-        </div>
-      </section>
-    </div>
+          </div>
+        </section>
+
+        <section>
+          <Card className="shadow-xl bg-card/80 border-primary/20">
+            <CardHeader className="text-center">
+              <Goal className="h-16 w-16 text-primary mx-auto mb-4" />
+              <CardTitle className="text-3xl text-primary">The Goal: Realizing the Ātman (True Self)</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center max-w-2xl mx-auto">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                The Pancha Koshas are often likened to layers veiling the innermost Self (Ātman). True self-realization, the ultimate aim of yogic and Vedantic paths, occurs when the seeker transcends all five koshas. This transcendence leads to the profound realization of one's true identity as Brahman—pure, undifferentiated consciousness, existing beyond the limitations of body, energy, mind, intellect, and ego.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+
+        <section>
+          <div className="text-center mb-10">
+              <BookMarked className="h-16 w-16 text-accent mx-auto mb-4" />
+              <h2 className="text-4xl font-semibold text-foreground">Key Insights on the Pancha Kosha Model</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-3">Understanding the Koshas offers valuable perspectives for a balanced, conscious life and spiritual evolution.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+              {keyInsightsData.map((insight) => (
+              <Card key={insight.title} className="shadow-lg hover:shadow-xl transition-shadow bg-card/50">
+                  <CardHeader className="flex flex-row items-center space-x-4 pb-3">
+                  <insight.icon className="h-10 w-10 text-primary flex-shrink-0" />
+                  <CardTitle className="text-2xl text-primary">{insight.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                  <p className="text-muted-foreground leading-relaxed">{insight.description}</p>
+                  </CardContent>
+              </Card>
+              ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

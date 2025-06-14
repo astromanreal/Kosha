@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { HelpCircle } from 'lucide-react';
 import KoshaQuiz from '@/components/kosha-explorer/kosha-quiz';
@@ -7,27 +8,31 @@ const siteBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.koshaexplor
 
 export const metadata: Metadata = {
   title: 'Knowledge Quiz | Test Your Wellness Wisdom | Kosha Explorer',
-  description: 'Test your understanding of Koshas, anatomy, and holistic wellness with our interactive quiz. Earn points and deepen your knowledge!',
-  keywords: ['Wellness Quiz', 'Kosha Quiz', 'Anatomy Quiz', 'Holistic Health Knowledge', 'Spiritual Quiz', 'Ayurveda Quiz'],
+  description: 'Test your understanding of the Pancha Koshas, human anatomy, and holistic wellness principles with our interactive quiz. Deepen your knowledge on your journey to well-being and spiritual growth!',
+  keywords: ['Wellness Quiz Online', 'Kosha Knowledge Test', 'Anatomy Quiz Human Body', 'Holistic Health Quiz', 'Spiritual Quiz Questions', 'Ayurveda Knowledge Test', 'Mind-Body Wellness Assessment', 'Yoga Philosophy Quiz', 'Health Literacy Test'],
   openGraph: {
-    title: 'Knowledge Quiz | Test Your Wellness Wisdom | Kosha Explorer',
-    description: 'Challenge your understanding of holistic wellness, Pancha Koshas, and human anatomy with our interactive quiz.',
-    url: `${siteBaseUrl}/advisor`,
-    type: 'website', // Or 'article' if you consider it a piece of content
+    title: 'Holistic Wellness Knowledge Quiz | Test Your Wisdom | Kosha Explorer',
+    description: 'Challenge your understanding of holistic wellness concepts, Pancha Koshas, and human anatomy with our interactive quiz. Deepen your knowledge and track your learning!',
+    url: `${siteBaseUrl}/advisor`, 
+    type: 'website', 
     images: [
       {
-        url: `https://picsum.photos/seed/wellness-quiz-og/1200/630`,
+        url: `https://placehold.co/1200x630.png?text=Kosha+Explorer+Wellness+Quiz`,
         width: 1200,
         height: 630,
-        alt: 'Kosha Explorer Wellness Knowledge Quiz',
+        alt: 'Kosha Explorer Wellness Knowledge Quiz Banner',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Knowledge Quiz | Test Your Wellness Wisdom | Kosha Explorer',
-    description: 'Test your knowledge on Koshas, anatomy, and holistic wellness. Earn points and deepen your understanding!',
-    images: [`https://picsum.photos/seed/wellness-quiz-twitter/1200/630`],
+    title: 'Test Your Wellness Wisdom: Kosha & Anatomy Quiz | Kosha Explorer',
+    description: 'How well do you know the Pancha Koshas, human anatomy, and holistic health? Take our quiz to find out and deepen your understanding on Kosha Explorer!',
+    images: [`https://placehold.co/1200x630.png?text=Kosha+Explorer+Wellness+Quiz`],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -147,27 +152,77 @@ const quizData = {
 };
 
 export default function AdvisorPage() {
-  return (
-    <div className="space-y-8">
-      <section className="text-center">
-        <HelpCircle className="h-16 w-16 text-primary mx-auto mb-4" />
-        <h1 className="text-4xl font-bold text-primary mb-4">Holistic Wellness Knowledge Quiz</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Test your understanding of Koshas, human anatomy, and holistic wellness concepts. Earn points and deepen your knowledge on your journey to well-being!
-        </p>
-      </section>
+  const pageUrl = `${siteBaseUrl}/advisor`;
+  const pageTitle = metadata.title as string;
+  const pageDescription = metadata.description as string;
+  const imageUrl = (metadata.openGraph?.images as any)?.[0]?.url;
 
-      <Card className="max-w-3xl mx-auto shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-2xl text-primary">Kosha Explorer Quiz: Anatomy & Wellness</CardTitle>
-          <CardDescription>
-            Answer the questions to the best of your ability. Good luck!
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <KoshaQuiz quizData={quizData.quiz} />
-        </CardContent>
-      </Card>
-    </div>
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": pageUrl,
+    "name": pageTitle,
+    "description": pageDescription,
+    "isPartOf": {
+      "@type": "WebSite",
+      "url": siteBaseUrl,
+      "name": "Kosha Explorer"
+    },
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": imageUrl
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": new Date().toISOString().split('T')[0]
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteBaseUrl
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Knowledge Quiz",
+      "item": pageUrl
+    }]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="space-y-8">
+        <section className="text-center">
+          <HelpCircle className="h-16 w-16 text-primary mx-auto mb-4" />
+          <h1 className="text-4xl font-bold text-primary mb-4">Holistic Wellness Knowledge Quiz</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Test your understanding of Koshas, human anatomy, and holistic wellness concepts. Earn points and deepen your knowledge on your journey to well-being!
+          </p>
+        </section>
+
+        <Card className="max-w-3xl mx-auto shadow-xl">
+          <CardHeader>
+            <CardTitle className="text-2xl text-primary">Kosha Explorer Quiz: Anatomy & Wellness</CardTitle>
+            <CardDescription>
+              Answer the questions to the best of your ability. Good luck!
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <KoshaQuiz quizData={quizData.quiz} />
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }

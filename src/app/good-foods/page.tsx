@@ -16,28 +16,39 @@ import {
 const siteBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.koshaexplorer.com';
 
 export const metadata: Metadata = {
-  title: 'Good Foods Guide | Balanced Diet, Nutrition & Micronutrients',
-  description: 'Learn about balanced diets, calories, macronutrients (proteins, carbs, fats), and essential vitamins and minerals for optimal health and well-being. Practical tips for healthy eating.',
-  keywords: ['Balanced Diet', 'Healthy Eating', 'Nutrition Guide', 'Macronutrients', 'Micronutrients', 'Vitamins', 'Minerals', 'Calorie Density', 'Wellness Diet'],
+  title: 'Good Foods Guide | Balanced Diet, Nutrition, Vitamins & Minerals | Kosha Explorer',
+  description: 'Your comprehensive guide to healthy eating with Kosha Explorer. Learn about balanced diets, calories, macronutrients (proteins, carbohydrates, fats), and essential vitamins and minerals for optimal health and well-being. Practical tips for a nourishing lifestyle.',
+  keywords: ['Balanced Diet Guide', 'Healthy Eating Tips', 'Nutrition Basics Explained', 'Macronutrients Role', 'Micronutrients Food Sources', 'Vitamins and Minerals Chart', 'Calorie Density Information', 'Wellness Diet Plan Ideas', 'Holistic Nutrition Principles', 'Healthy Food Choices', 'Nutrient-Rich Foods'],
   openGraph: {
-    title: 'Good Foods Guide | Balanced Diet & Nutrition Tips | Kosha Explorer',
-    description: 'Your comprehensive guide to understanding macronutrients, micronutrients, calorie density, and practical tips for a healthy, balanced diet.',
+    title: 'Good Foods & Nutrition Guide for Optimal Health | Kosha Explorer',
+    description: 'Understand macronutrients (proteins, carbs, fats), micronutrients (vitamins, minerals), calorie density, and get practical tips for building a healthy, balanced diet with the Kosha Explorer Good Foods Guide.',
     url: `${siteBaseUrl}/good-foods`,
     type: 'article',
     images: [
       {
-        url: `https://picsum.photos/seed/good-foods-guide-og/1200/630`,
+        url: `https://placehold.co/1200x630.png?text=Kosha+Explorer+Good+Foods+Guide`,
         width: 1200,
         height: 630,
-        alt: 'Good Foods Guide for a Balanced Diet',
+        alt: 'A vibrant display of healthy foods representing the Good Foods Guide on Kosha Explorer',
       },
     ],
+    article: {
+        publishedTime: "2024-01-01T00:00:00.000Z",
+        modifiedTime: new Date().toISOString(),
+        authors: [`${siteBaseUrl}/about`], 
+        section: "Nutrition",
+        tags: ['Healthy Eating', 'Nutrition', 'Balanced Diet', 'Macronutrients', 'Micronutrients'],
+      },
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Good Foods Guide | Nutrition & Healthy Eating | Kosha Explorer',
-    description: 'Learn about balanced diets, macronutrients, micronutrients, and get practical tips for healthy eating habits.',
-    images: [`https://picsum.photos/seed/good-foods-guide-twitter/1200/630`],
+    title: 'Nourish Your Body: The Ultimate Good Foods Guide | Kosha Explorer',
+    description: 'Learn about balanced diets, macronutrients, micronutrients, and practical healthy eating habits with the Kosha Explorer nutrition guide for well-being.',
+    images: [`https://placehold.co/1200x630.png?text=Kosha+Explorer+Good+Foods+Guide`],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -104,154 +115,212 @@ const practicalTipsData = [
 ];
 
 export default function GoodFoodsPage() {
+  const pageUrl = `${siteBaseUrl}/good-foods`;
+  const pageTitle = (metadata.title as { default: string }).default || metadata.title as string; // Adjust if template is used
+  const pageDescription = metadata.description as string;
+  const imageUrl = (metadata.openGraph?.images as any)?.[0]?.url;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": pageUrl
+    },
+    "headline": pageTitle,
+    "description": pageDescription,
+    "image": imageUrl,
+    "author": {
+      "@type": "Organization",
+      "name": "Kosha Explorer"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kosha Explorer",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `https://placehold.co/200x60.png?text=Kosha+Explorer+Logo`
+      }
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": new Date().toISOString().split('T')[0],
+    "articleSection": "Nutrition",
+    "keywords": (metadata.keywords as string[]).join(", ")
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteBaseUrl
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Good Foods Guide",
+      "item": pageUrl
+    }]
+  };
+
   return (
-    <div className="space-y-12">
-      <section className="text-center">
-        <Salad className="h-20 w-20 text-primary mx-auto mb-6" />
-        <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Nourish Your Body: A Guide to Good Foods & Balanced Diet</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Discover the essentials of a balanced diet, understand calories, and learn about vital macronutrients and micronutrients for optimal health and well-being. Embrace healthy eating habits for a vibrant life.
-        </p>
-      </section>
-
-      <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="text-3xl text-primary flex items-center">
-            <Scale className="h-8 w-8 mr-3 text-accent" />
-            The Foundation: A Balanced Diet with Macronutrients
-          </CardTitle>
-          <CardDescription>
-            A balanced diet provides your body with the necessary nutrients (macronutrients and micronutrients) to function correctly. It involves consuming a variety of foods in the right proportions.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Accordion type="multiple" className="w-full space-y-4" defaultValue={["Proteins"]}>
-            {macronutrientsData.map((macro) => (
-              <AccordionItem value={macro.name} key={macro.name} className="border border-border rounded-lg shadow-sm bg-card/50">
-                <AccordionTrigger className="text-xl hover:text-accent p-4">
-                  <div className="flex items-center">
-                    <macro.icon className="h-6 w-6 mr-3 text-primary" /> {macro.name}
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="p-4 pt-0 space-y-3">
-                  <p className="text-muted-foreground">{macro.role}</p>
-                  <div>
-                    <h3 className="font-semibold text-foreground mb-1">Key Food Sources:</h3>
-                    <ul className="list-disc list-inside text-muted-foreground space-y-1 pl-2">
-                      {macro.sources.map(src => <li key={src}>{src}</li>)}
-                    </ul>
-                  </div>
-                  <p className="text-sm text-muted-foreground/80 italic">{macro.details}</p>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-          <div className="mt-6 p-4 border rounded-lg bg-muted/30">
-            <h2 className="text-xl font-semibold text-foreground mb-2 flex items-center"><CheckCircle2 className="h-5 w-5 mr-2 text-primary"/>The Healthy Plate Method</h2>
-            <p className="text-muted-foreground">A simple way to visualize a balanced meal: Fill half your plate with non-starchy vegetables, a quarter with lean protein, and a quarter with whole grains or starchy vegetables. Add a source of healthy fat in moderation. This promotes a balanced intake of macronutrients and micronutrients.</p>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="text-3xl text-primary flex items-center">
-            <Flame className="h-8 w-8 mr-3 text-accent" />
-            Understanding Calories & Nutrient Density
-          </CardTitle>
-          <CardDescription>
-            Calories are units of energy your body uses for all its functions. While important for energy balance, the quality of calories (nutrient density) matters as much as quantity for overall health.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Your daily caloric needs depend on factors like age, sex, activity level, and metabolic rate (Basal Metabolic Rate - BMR, and Total Daily Energy Expenditure - TDEE). Focus on nutrient-dense foods that provide vitamins, minerals, and fiber along with calories, rather than "empty calories" from processed foods which offer little nutritional value.
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="space-y-12">
+        <section className="text-center">
+          <Salad className="h-20 w-20 text-primary mx-auto mb-6" />
+          <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">Nourish Your Body: A Guide to Good Foods & Balanced Diet</h1>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Discover the essentials of a balanced diet, understand calories, and learn about vital macronutrients and micronutrients for optimal health and well-being. Embrace healthy eating habits for a vibrant life.
           </p>
-          <h2 className="text-xl font-semibold text-foreground mb-3">Approximate Calorie Density of Common Foods:</h2>
+        </section>
+
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle className="text-3xl text-primary flex items-center">
+              <Scale className="h-8 w-8 mr-3 text-accent" />
+              The Foundation: A Balanced Diet with Macronutrients
+            </CardTitle>
+            <CardDescription>
+              A balanced diet provides your body with the necessary nutrients (macronutrients and micronutrients) to function correctly. It involves consuming a variety of foods in the right proportions.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="multiple" className="w-full space-y-4" defaultValue={["Proteins"]}>
+              {macronutrientsData.map((macro) => (
+                <AccordionItem value={macro.name} key={macro.name} className="border border-border rounded-lg shadow-sm bg-card/50">
+                  <AccordionTrigger className="text-xl hover:text-accent p-4">
+                    <div className="flex items-center">
+                      <macro.icon className="h-6 w-6 mr-3 text-primary" /> {macro.name}
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="p-4 pt-0 space-y-3">
+                    <p className="text-muted-foreground">{macro.role}</p>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Key Food Sources:</h3>
+                      <ul className="list-disc list-inside text-muted-foreground space-y-1 pl-2">
+                        {macro.sources.map(src => <li key={src}>{src}</li>)}
+                      </ul>
+                    </div>
+                    <p className="text-sm text-muted-foreground/80 italic">{macro.details}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+            <div className="mt-6 p-4 border rounded-lg bg-muted/30">
+              <h2 className="text-xl font-semibold text-foreground mb-2 flex items-center"><CheckCircle2 className="h-5 w-5 mr-2 text-primary"/>The Healthy Plate Method</h2>
+              <p className="text-muted-foreground">A simple way to visualize a balanced meal: Fill half your plate with non-starchy vegetables, a quarter with lean protein, and a quarter with whole grains or starchy vegetables. Add a source of healthy fat in moderation. This promotes a balanced intake of macronutrients and micronutrients.</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle className="text-3xl text-primary flex items-center">
+              <Flame className="h-8 w-8 mr-3 text-accent" />
+              Understanding Calories & Nutrient Density
+            </CardTitle>
+            <CardDescription>
+              Calories are units of energy your body uses for all its functions. While important for energy balance, the quality of calories (nutrient density) matters as much as quantity for overall health.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-4">
+              Your daily caloric needs depend on factors like age, sex, activity level, and metabolic rate (Basal Metabolic Rate - BMR, and Total Daily Energy Expenditure - TDEE). Focus on nutrient-dense foods that provide vitamins, minerals, and fiber along with calories, rather than "empty calories" from processed foods which offer little nutritional value.
+            </p>
+            <h2 className="text-xl font-semibold text-foreground mb-3">Approximate Calorie Density of Common Foods:</h2>
+              <div className="overflow-x-auto rounded-lg border shadow-md">
+              <Table>
+                <TableHeader className="bg-muted/50">
+                  <TableRow>
+                    <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Food Type / Group</TableHead>
+                    <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Calorie Density Level</TableHead>
+                    <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Example (kcal per 100g)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody className="bg-background divide-y divide-border">
+                  {calorieDensityData.map((item) => (
+                    <TableRow key={item.foodType} className="hover:bg-muted/30 transition-colors">
+                      <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">{item.foodType}</TableCell>
+                      <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.density}</TableCell>
+                      <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.example}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle className="text-3xl text-primary flex items-center">
+              <FlaskConical className="h-8 w-8 mr-3 text-accent" />
+              Essential Micronutrients: Vitamins & Minerals Guide
+            </CardTitle>
+            <CardDescription>
+              Micronutrients are vital vitamins and minerals your body needs in smaller amounts to function properly, support metabolism, and maintain overall health.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-4">
+              A varied and colorful diet, rich in whole foods like fruits, vegetables, whole grains, proteins, and healthy fats, is the best way to ensure adequate intake of essential micronutrients.
+            </p>
             <div className="overflow-x-auto rounded-lg border shadow-md">
-            <Table>
-              <TableHeader className="bg-muted/50">
-                <TableRow>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Food Type / Group</TableHead>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Calorie Density Level</TableHead>
-                  <TableHead className="px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Example (kcal per 100g)</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="bg-background divide-y divide-border">
-                {calorieDensityData.map((item) => (
-                  <TableRow key={item.foodType} className="hover:bg-muted/30 transition-colors">
-                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">{item.foodType}</TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.density}</TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.example}</TableCell>
+              <Table>
+                <TableHeader className="bg-muted/50">
+                  <TableRow>
+                    <TableHead className="w-1/12"></TableHead>
+                    <TableHead className="w-2/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Micronutrient</TableHead>
+                    <TableHead className="w-4/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Key Roles in the Body</TableHead>
+                    <TableHead className="w-5/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Rich Food Sources</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+                </TableHeader>
+                <TableBody className="bg-background divide-y divide-border">
+                  {micronutrientsTableData.map((item) => (
+                    <TableRow key={item.name} className="hover:bg-muted/30 transition-colors">
+                      <TableCell className="px-6 py-4 text-center"><item.icon className="h-5 w-5 text-primary mx-auto" /></TableCell>
+                      <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">{item.name}</TableCell>
+                      <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.role}</TableCell>
+                      <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.sources}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="text-3xl text-primary flex items-center">
-            <FlaskConical className="h-8 w-8 mr-3 text-accent" />
-            Essential Micronutrients: Vitamins & Minerals Guide
-          </CardTitle>
-          <CardDescription>
-            Micronutrients are vital vitamins and minerals your body needs in smaller amounts to function properly, support metabolism, and maintain overall health.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-           <p className="text-muted-foreground mb-4">
-            A varied and colorful diet, rich in whole foods like fruits, vegetables, whole grains, proteins, and healthy fats, is the best way to ensure adequate intake of essential micronutrients.
-          </p>
-          <div className="overflow-x-auto rounded-lg border shadow-md">
-            <Table>
-              <TableHeader className="bg-muted/50">
-                <TableRow>
-                  <TableHead className="w-1/12"></TableHead>
-                  <TableHead className="w-2/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Micronutrient</TableHead>
-                  <TableHead className="w-4/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Key Roles in the Body</TableHead>
-                  <TableHead className="w-5/12 px-6 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Rich Food Sources</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="bg-background divide-y divide-border">
-                {micronutrientsTableData.map((item) => (
-                  <TableRow key={item.name} className="hover:bg-muted/30 transition-colors">
-                    <TableCell className="px-6 py-4 text-center"><item.icon className="h-5 w-5 text-primary mx-auto" /></TableCell>
-                    <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">{item.name}</TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.role}</TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">{item.sources}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="text-3xl text-primary flex items-center">
-            <ListChecks className="h-8 w-8 mr-3 text-accent" />
-            Practical Tips for Healthy Eating & Nutrition
-          </CardTitle>
-          <CardDescription>
-            Incorporate these simple habits into your daily routine for better nutrition, improved energy, and overall well-being.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3">
-            {practicalTipsData.map((tip, index) => (
-              <li key={index} className="flex items-start p-3 bg-muted/30 rounded-md hover:bg-muted/50 transition-colors">
-                <Dot className="h-6 w-6 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">{tip}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-    </div>
+        <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
+          <CardHeader>
+            <CardTitle className="text-3xl text-primary flex items-center">
+              <ListChecks className="h-8 w-8 mr-3 text-accent" />
+              Practical Tips for Healthy Eating & Nutrition
+            </CardTitle>
+            <CardDescription>
+              Incorporate these simple habits into your daily routine for better nutrition, improved energy, and overall well-being.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-3">
+              {practicalTipsData.map((tip, index) => (
+                <li key={index} className="flex items-start p-3 bg-muted/30 rounded-md hover:bg-muted/50 transition-colors">
+                  <Dot className="h-6 w-6 text-primary mr-2 mt-0.5 flex-shrink-0" />
+                  <span className="text-muted-foreground">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }

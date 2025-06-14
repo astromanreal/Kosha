@@ -1,80 +1,12 @@
 
-import type { Metadata } from 'next';
+'use client';
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CalendarCheck, Sunrise, Sun, Moon, Leaf, Coffee, Bed, Sparkles, Settings2, Utensils, Zap, CloudDrizzle, Snowflake } from 'lucide-react';
+import { CalendarCheck, Sunrise, Sun, Moon, Leaf, Settings2, ListChecks, Recycle } from 'lucide-react';
 import Image from "next/image";
+import DinacharyaBuilder from '@/components/kosha-explorer/dinacharya-builder';
 
-const siteBaseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.koshaexplorer.com';
-
-export const metadata: Metadata = {
-  title: 'Ayurvedic Daily & Seasonal Routines | Dinacharya & Ritucharya',
-  description: 'Discover Dinacharya (Ayurvedic daily routine) and Ritucharya (seasonal regimen) for holistic health, vitality, and balance. Learn practices for morning, afternoon, evening, and seasonal well-being.',
-  keywords: ['Dinacharya', 'Ritucharya', 'Ayurvedic Routine', 'Daily Routine', 'Seasonal Routine', 'Holistic Health', 'Ayurveda Lifestyle', 'Wellness Practices'],
-  openGraph: {
-    title: 'Ayurvedic Daily & Seasonal Routines | Dinacharya & Ritucharya | Kosha Explorer',
-    description: 'Learn about Ayurvedic daily (Dinacharya) and seasonal (Ritucharya) routines to enhance health, balance doshas, and live in harmony with nature.',
-    url: `${siteBaseUrl}/routines`,
-    type: 'article',
-    images: [
-      {
-        url: `https://placehold.co/1200x630.png`,
-        width: 1200,
-        height: 630,
-        alt: 'Ayurvedic Daily and Seasonal Routines',
-        data_ai_hint: 'calendar routine wellness'
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Ayurvedic Daily & Seasonal Routines | Kosha Explorer',
-    description: 'Explore Dinacharya and Ritucharya for optimal health and well-being, guided by Ayurvedic principles.',
-    images: [`https://placehold.co/1200x630.png`],
-  },
-};
-
-const dinacharyaPractices = [
-  {
-    time: "Morning (Approx. 6 AM - 10 AM - Kapha Time)",
-    icon: Sunrise,
-    iconColor: "text-orange-400",
-    activities: [
-      { name: "Wake Up Early", description: "Ideally before sunrise, during Vata time (2-6 AM) for clarity or early Kapha time for stability.", points: ["Aligns with natural rhythms.", "Promotes mental clarity and freshness."] },
-      { name: "Elimination (Shaucha)", description: "Evacuate bowels and bladder.", points: ["Aids detoxification.", "Lightens the body."] },
-      { name: "Oral Hygiene (Danta Dhavana & Jihva Nirlekhana)", description: "Brush teeth and scrape tongue.", points: ["Removes Ama (toxins) from tongue.", "Improves taste perception and oral health."] },
-      { name: "Oil Pulling (Gandusha/Kavala)", description: "Swish oil (sesame or coconut) in mouth.", points: ["Strengthens gums and teeth.", "Detoxifies oral cavity."] },
-      { name: "Warm Water or Herbal Tea", description: "Sip warm water, possibly with lemon or ginger.", points: ["Stimulates digestion (Agni).", "Hydrates the body."] },
-      { name: "Self-Massage (Abhyanga)", description: "Apply warm oil to the body.", points: ["Nourishes skin, calms Vata.", "Improves circulation and lymphatic drainage."] },
-      { name: "Exercise (Vyayama)", description: "Yoga, walking, or other suitable exercise.", points: ["Boosts circulation and energy.", "Strengthens the body according to dosha."] },
-      { name: "Bathing (Snana)", description: "Warm bath or shower.", points: ["Cleanses the body.", "Refreshes and energizes."] },
-      { name: "Meditation & Pranayama", description: "Mindfulness, breathwork.", points: ["Calms the mind, balances Prana.", "Sets a positive tone for the day."] },
-      { name: "Light Breakfast", description: "Nourishing and easy to digest.", points: ["Provides sustained energy.", "Should be taken after Agni is kindled."] },
-    ]
-  },
-  {
-    time: "Midday (Approx. 10 AM - 2 PM - Pitta Time)",
-    icon: Sun,
-    iconColor: "text-yellow-500",
-    activities: [
-      { name: "Main Meal", description: "Largest meal of the day when Agni is strongest.", points: ["Focus on wholesome, balanced foods.", "Eat mindfully, without distractions."] },
-      { name: "Gentle Walk", description: "Short walk after lunch.", points: ["Aids digestion.", "Prevents post-meal sluggishness."] },
-      { name: "Focused Work/Activity", description: "Utilize Pitta's sharp energy for productive tasks.", points: ["Mental clarity is high.", "Good time for decision-making."] },
-    ]
-  },
-  {
-    time: "Afternoon/Evening (Approx. 2 PM - 10 PM - Vata then Kapha Time)",
-    icon: Moon,
-    iconColor: "text-blue-400",
-    activities: [
-      { name: "Light Dinner (by 7-8 PM)", description: "Easily digestible meal, well before bedtime.", points: ["Allows proper digestion before sleep.", "Prevents Ama formation."] },
-      { name: "Relaxation", description: "Wind down with calming activities.", points: ["Reading, gentle music, spending time with loved ones.", "Prepares mind for sleep."] },
-      { name: "Limit Screen Time", description: "Reduce exposure to blue light before bed.", points: ["Supports natural melatonin production.", "Improves sleep quality."] },
-      { name: "Prepare for Sleep", description: "Engage in a consistent bedtime routine.", points: ["Signals body it's time to rest.", "Promotes tranquility."] },
-      { name: "Sleep by 10 PM", description: "During Kapha time for deep, restorative sleep.", points: ["Allows body to detoxify and repair.", "Crucial for overall health and vitality."] },
-    ]
-  }
-];
 
 const ritucharyaSeasons = [
   {
@@ -105,7 +37,7 @@ const ritucharyaSeasons = [
   },
   {
     season: "Varsha Ritu (Monsoon/Rainy Season)",
-    icon: CloudDrizzle, // Changed from Zap
+    icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-cloud-drizzle"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 16v1"/><path d="M12 21v1"/></svg>, 
     iconColor: "text-blue-500",
     description: "Agni (digestive fire) is generally weak, and Vata dosha can be aggravated due to atmospheric changes. Focus on easily digestible, warm foods and practices to maintain digestive strength and balance Vata.",
     tips: [
@@ -131,7 +63,7 @@ const ritucharyaSeasons = [
   },
   {
     season: "Hemanta Ritu (Early Winter)",
-    icon: Coffee, 
+    icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-coffee"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v2a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2a4 4 0 0 1-4 4h-1a2 2 0 0 1-2-2V9a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1Z"/><path d="M6 2h12v4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V2Z"/><path d="M6 18h.01M18 18h.01"/></svg>, 
     iconColor: "text-blue-300",
     description: "Agni (digestive fire) is typically strong in winter, allowing for richer foods. Vata and Kapha doshas can increase due to cold. Focus on nourishing, warming foods and practices.",
     tips: [
@@ -144,7 +76,7 @@ const ritucharyaSeasons = [
   },
   {
     season: "Shishira Ritu (Late Winter)",
-    icon: Snowflake, 
+    icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-snowflake"><path d="M2 12h10"/><path d="m7 2-5 10 5 10"/><path d="M22 12h-10"/><path d="m17 2 5 10-5 10"/><path d="m12 2 2.5 5M12 22l2.5-5M12 2l-2.5 5M12 22l-2.5-5"/></svg>,
     iconColor: "text-gray-400",
     description: "Cold and dryness intensify, further aggravating Vata and potentially Kapha. Continue with warming, nourishing routines, and protect against cold.",
     tips: [
@@ -156,7 +88,6 @@ const ritucharyaSeasons = [
     ]
   }
 ];
-
 
 export default function RoutinesPage() {
   return (
@@ -172,44 +103,42 @@ export default function RoutinesPage() {
       <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <CardHeader>
           <CardTitle className="text-3xl text-primary flex items-center">
-            <Sunrise className="h-8 w-8 mr-3 text-orange-500" />
-            Dinacharya: The Art of Daily Living
+            <ListChecks className="h-8 w-8 mr-3 text-orange-500" />
+            Interactive Dinacharya Builder
           </CardTitle>
           <CardDescription>
-            Dinacharya outlines ideal daily practices from waking to sleeping to maintain doshic balance, strong Agni (digestive fire), and overall well-being. Consistency is key.
+            Craft and track your ideal Ayurvedic daily routine. Check off activities as you complete them to build healthy habits.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Accordion type="multiple" className="w-full space-y-4" defaultValue={["Morning (Approx. 6 AM - 10 AM - Kapha Time)"]}>
-            {dinacharyaPractices.map((period) => (
-              <AccordionItem value={period.time} key={period.time} className="border border-border rounded-lg shadow-sm bg-card/50">
-                <AccordionTrigger className="text-xl hover:text-accent p-4">
-                  <div className="flex items-center">
-                    <period.icon className={`h-6 w-6 mr-3 ${period.iconColor}`} /> {period.time}
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="p-4 pt-0 space-y-3">
-                  {period.activities.map(activity => (
-                    <div key={activity.name} className="py-2">
-                      <h4 className="font-semibold text-foreground text-md mb-1">{activity.name}</h4>
-                      <p className="text-sm text-muted-foreground/90 mb-1">{activity.description}</p>
-                      <ul className="list-disc list-inside text-sm text-muted-foreground space-y-0.5 pl-4">
-                        {activity.points.map(point => <li key={point}>{point}</li>)}
-                      </ul>
-                    </div>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <DinacharyaBuilder />
         </CardContent>
       </Card>
+
+
+      <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
+        <CardHeader>
+          <CardTitle className="text-3xl text-primary flex items-center">
+            <Sunrise className="h-8 w-8 mr-3 text-orange-500" />
+            Dinacharya: The Art of Daily Living (Informational)
+          </CardTitle>
+          <CardDescription>
+            Dinacharya outlines ideal daily practices from waking to sleeping to maintain doshic balance, strong Agni (digestive fire), and overall well-being. Consistency is key. This section provides general Ayurvedic wisdom.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+           <p className="text-sm text-muted-foreground mb-4">
+            Ayurveda emphasizes that our daily activities significantly impact our health. Dinacharya provides a structured approach to align our lifestyle with the natural cycles of the day, optimizing digestion, energy, and mental clarity.
+          </p>
+        </CardContent>
+      </Card>
+
 
       <Card className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <CardHeader>
           <CardTitle className="text-3xl text-primary flex items-center">
             <Leaf className="h-8 w-8 mr-3 text-green-600" />
-            Ritucharya: Harmonizing with the Seasons
+            Ritucharya: Harmonizing with the Seasons (Informational)
           </CardTitle>
           <CardDescription>
             Ritucharya involves adapting diet, lifestyle, and practices according to the prevailing season to counteract potential doshic imbalances and maintain health throughout the year.
@@ -240,12 +169,12 @@ export default function RoutinesPage() {
       <Card className="shadow-xl bg-primary/5 border-primary/20">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-primary flex items-center justify-center">
-            <Settings2 className="h-7 w-7 mr-3 text-accent" /> Personalize Your Routine (Coming Soon)
+            <Settings2 className="h-7 w-7 mr-3 text-accent" /> Personalize Your Routine Further (Coming Soon)
           </CardTitle>
         </CardHeader>
         <CardContent className="text-center max-w-xl mx-auto">
           <p className="text-md text-muted-foreground leading-relaxed">
-            Future updates will allow you to generate personalized daily and weekly routines based on your Prakriti (Ayurvedic constitution), current imbalances (Vikriti), and personal wellness goals. Stay tuned for these exciting enhancements!
+            Future updates to the interactive builder will allow you to generate and customize routines based on your Prakriti (Ayurvedic constitution), current imbalances (Vikriti), and personal wellness goals, including Ritucharya adjustments. Stay tuned!
           </p>
         </CardContent>
       </Card>
